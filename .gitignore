@@ -482,3 +482,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+back/src/LibraryVault.API/LibraryVault.db
+back/src/LibraryVault.API/LibraryVault.db-shm
+back/src/LibraryVault.API/LibraryVault.db-wal
+back/src/LibraryVault.API/appsettings.Development.json

@@ -1,6 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\LibraryVault.Application\LibraryVault.Application.csproj" />
     <ProjectReference Include="..\LibraryVault.Domain\LibraryVault.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>

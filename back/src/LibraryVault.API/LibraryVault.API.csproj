@@ -1,12 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-  <ItemGroup>
-    <ProjectReference Include="..\LibraryVault.Application\LibraryVault.Application.csproj" />
-  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <PublishAot>true</PublishAot>
+    <PublishAot>false</PublishAot>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibraryVault.Application\LibraryVault.Application.csproj" />
+    <ProjectReference Include="..\LibraryVault.Infrastructure\LibraryVault.Infrastructure.csproj" />
+  </ItemGroup>
 </Project>

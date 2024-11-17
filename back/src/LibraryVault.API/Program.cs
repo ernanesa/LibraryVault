@@ -1,7 +1,9 @@
 using System.Text;
 using LibraryVault.API.Configuration;
 using LibraryVault.API.Endpoints;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
@@ -9,9 +11,44 @@ var builder = WebApplication.CreateSlimBuilder(args);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    options =>
+    {
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            Description = "JWT Authorization header using the Bearer scheme. "
+                          + "Enter 'Bearer' [space] and then your token in the text input below."
+                          + "Example: 'Bearer 12345abcdef'",
+        });
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                Array.Empty<string>()
+            }
+        });
 
-builder.Services.AddAuthentication("Bearer")
+        options.SwaggerDoc("v1", new() { Title = "Library Vault API", Version = "v1" });
+    });
+
+builder.Services.AddAuthentication(
+        options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer("Bearer", options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters

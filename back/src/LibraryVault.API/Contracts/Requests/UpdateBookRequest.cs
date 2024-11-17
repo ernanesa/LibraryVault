@@ -3,7 +3,6 @@ using LibraryVault.Domain.ValueObjects;
 
 namespace LibraryVault.API.Contracts.Requests
 {
-    [JsonSerializable(typeof(UpdateBookRequest))]
     public class UpdateBookRequest
     {
         public string Title { get; set; }

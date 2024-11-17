@@ -1,5 +1,6 @@
 using LibraryVault.API.Contracts.Requests;
 using LibraryVault.Application.Interfaces.Services;
+using LibraryVault.Domain.ValueObjects;
 
 namespace LibraryVault.API.Endpoints
 {
@@ -9,17 +10,18 @@ namespace LibraryVault.API.Endpoints
         {
             var bookGroup = app.MapGroup("/books")
                 .WithTags("Books");
-            
-            bookGroup.MapGet("/books", async (IBookService bookService, string? author, string? title, int? year) =>
+
+            bookGroup.MapGet("/books", async (IBookService bookService, string? author, string? isbn, string? title, int? year) =>
             {
-                var books = await bookService.SearchBooksAsync(author, title, year);
+                var books = await bookService.SearchBooksAsync(author, title, isbn, year);
                 return Results.Ok(books);
             })
             .AllowAnonymous();
 
             bookGroup.MapPost("/books", async (IBookService bookService, CreateBookRequest request) =>
             {
-                var bookId = await bookService.AddBookAsync(request.Title, request.Author, request.Year);
+                var bookId = await bookService.CreateBookAsync(request.Title, request.Author,
+                    new ISBN(request.ISBN), request.Year);
                 return Results.Created($"/books/{bookId}", bookId);
             })
             .RequireAuthorization();

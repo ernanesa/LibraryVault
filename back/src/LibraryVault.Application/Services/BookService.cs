@@ -18,6 +18,11 @@ namespace LibraryVault.Application.Services
         {
             return await _bookRepository.GetAllAsync();
         }
+        
+        public async Task<Book?> GetBookByIdAsync(int id)
+        {
+            return await _bookRepository.GetByIdAsync(id);
+        }
 
         public async Task<int> CreateBookAsync(string title, string author, ISBN isbn, int year)
         {
@@ -50,28 +55,16 @@ namespace LibraryVault.Application.Services
             await _bookRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<Book>> SearchBooksAsync(string? author, string? title, int? year)
+        public async Task<IEnumerable<Book>> SearchBooksAsync(string? author, string? title, string? isbn, int? year)
         {
             var books = await _bookRepository.GetAllAsync();
 
-            if (author != null) { books = books.Where(b => b.Author == author); }
-            if (title != null) { books = books.Where(b => b.Title == title); }
-            if (year != null) { books = books.Where(b => b.Year == year); }
+            if (!string.IsNullOrEmpty(author)) { books = books.Where(b => b.Author.Contains(author, StringComparison.OrdinalIgnoreCase)); }
+            if (!string.IsNullOrEmpty(title)) { books = books.Where(b => b.Title.Contains(title, StringComparison.OrdinalIgnoreCase)); }
+            if (!string.IsNullOrEmpty(isbn)) { books = books.Where(b => b.ISBN.Value.Contains(isbn, StringComparison.OrdinalIgnoreCase)); }
+            if (year.HasValue) { books = books.Where(b => b.Year == year.Value); }
 
             return books;
-        }
-
-        public async Task<Book> AddBookAsync(string requestTitle, string requestAuthor, int requestYear)
-        {
-            var book = new Book
-            {
-                Title = requestTitle,
-                Author = requestAuthor,
-                Year = requestYear
-            };
-
-            await _bookRepository.AddAsync(book);
-            return book;
         }
     }
 }

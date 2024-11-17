@@ -1,4 +1,5 @@
 using LibraryVault.API.Contracts.Requests;
+using LibraryVault.API.Contracts.Responses;
 using LibraryVault.Application.Interfaces.Services;
 
 namespace LibraryVault.API.Endpoints
@@ -13,7 +14,8 @@ namespace LibraryVault.API.Endpoints
             userGroup.MapGet("/users", async (IUserService userService) =>
             {
                 var users = await userService.GetUsersAsync();
-                return Results.Ok(users);
+                var usersResponse = users.Select(user => new UserResponse(user));
+                return Results.Ok(usersResponse);
             })
             .RequireAuthorization();
 
@@ -26,6 +28,14 @@ namespace LibraryVault.API.Endpoints
 
             userGroup.MapPut("/users/{id:int}", async (IUserService userService, int id, UpdateUserRequest request) =>
             {
+                var user = await userService.GetUserByIdAsync(id);
+                if (user == null) return Results.NotFound("User not found.");
+                if(user.Id != id) return Results.BadRequest("User ID does not match.");
+                if(user.Email != request.Email)
+                {
+                    var existingUser = await userService.GetUserByEmailAsync(request.Email);
+                    if (existingUser != null) return Results.Conflict("User already exists with this email.");
+                }
                 await userService.UpdateUserAsync(id, request.Name, request.Email, request.IsAdmin);
                 return Results.NoContent();
             })
@@ -33,6 +43,8 @@ namespace LibraryVault.API.Endpoints
 
             userGroup.MapDelete("/users/{id:int}", async (IUserService userService, int id) =>
             {
+                var user = await userService.GetUserByIdAsync(id);
+                if (user == null) return Results.NotFound("User not found.");
                 await userService.DeleteUserAsync(id);
                 return Results.NoContent();
             })

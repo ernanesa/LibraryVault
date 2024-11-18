@@ -59,9 +59,3 @@ dotnet test
 2. Create a feature branch
 3. Commit changes
 4. Push and create a pull request
-
-## License
-[Specify your license]
-
-## Contact
-[Your contact information]

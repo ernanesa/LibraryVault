@@ -6,6 +6,7 @@ namespace LibraryVault.Domain.ValueObjects
 
         public ISBN(string value)
         {
+            value = value.Replace("-", "");
             if (string.IsNullOrWhiteSpace(value) || value.Length != 13)
                 throw new ArgumentException("Invalid ISBN.");
 

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryVault.Application", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryVault.Infrastructure", "LibraryVault.Infrastructure\LibraryVault.Infrastructure.csproj", "{A2F5C1F9-7761-4F07-B0D0-78EBEDB10DC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryVault.Tests", "..\test\LibraryVault.Tests\LibraryVault.Tests.csproj", "{DFE0A8BB-0D4A-4A87-994D-CBCC29920ECA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{A2F5C1F9-7761-4F07-B0D0-78EBEDB10DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2F5C1F9-7761-4F07-B0D0-78EBEDB10DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2F5C1F9-7761-4F07-B0D0-78EBEDB10DC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFE0A8BB-0D4A-4A87-994D-CBCC29920ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFE0A8BB-0D4A-4A87-994D-CBCC29920ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFE0A8BB-0D4A-4A87-994D-CBCC29920ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFE0A8BB-0D4A-4A87-994D-CBCC29920ECA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
